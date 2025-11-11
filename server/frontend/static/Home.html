@@ -6,23 +6,80 @@
   <link rel="stylesheet" href="static/bootstrap.min.css">
 <script>
 
+// LOGOUT ATUALIZADO - Chama a API do Django
 const logout = async (e) => {
-//Include the code for logout here.
+  if (e) e.preventDefault();
+  
+  console.log('=== LOGOUT CLICKED ===');
+  
+  // Alert mostrando que está deslogando
+  alert('Logging out...');
+  
+  try {
+    const response = await fetch('/djangoapp/logout/', {
+      method: 'GET',
+      credentials: 'same-origin'
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Logout response:', data);
+      
+      // Limpa sessionStorage
+      sessionStorage.removeItem("username");
+      
+      // Alert de sucesso
+      alert('Logged out successfully!');
+      
+      // Recarrega a página
+      window.location.reload();
+    } else {
+      alert('Error logging out. Please try again.');
+    }
+  } catch (error) {
+    console.error('Logout error:', error);
+    alert('Error logging out: ' + error.message);
+  }
 };
 
-let checkSession = ()=>{
+// Verifica sessão com Django
+let checkSession = async () => {
+  try {
+    // Tenta pegar do Django primeiro
+    const response = await fetch('/djangoapp/get_current_user/', {
+      method: 'GET',
+      credentials: 'same-origin'
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      if (data.userName) {
+        // Usuário logado no Django
+        sessionStorage.setItem("username", data.userName);
+        document.getElementById("loginlogout").innerHTML = 
+          '<span class="homepage_links">' + data.userName +'</span>' +
+          '<a class="homepage_links" onclick="logout()" href="#" style="margin-left: 10px;">Logout</a>';
+        return;
+      }
+    }
+  } catch (error) {
+    console.log('No Django session, checking sessionStorage');
+  }
+  
+  // Fallback para sessionStorage (se Django não retornar nada)
   let curr_user = sessionStorage.getItem("username");
-
+  
   if (curr_user && curr_user !== "") {
     document.getElementById("loginlogout").innerHTML = 
-    '<span class="homepage_links">' + curr_user +'</span>' +
-    '<a class="homepage_links" onclick="logout()" href="/">Logout</a>'
+      '<span class="homepage_links">' + curr_user +'</span>' +
+      '<a class="homepage_links" onclick="logout()" href="#" style="margin-left: 10px;">Logout</a>';
   } else {
     document.getElementById("loginlogout").innerHTML = 
-    '<a class="homepage_links" href="/login">Login</a>'+
-    '<a class="homepage_links"  href="/register">Register</a>'
+      '<a class="homepage_links" href="/login">Login</a>'+
+      '<a class="homepage_links" href="/register" style="margin-left: 10px;">Register</a>';
   }
- }
+};
+
 </script>
 </head>
 <body onload="checkSession()">
@@ -46,8 +103,9 @@ let checkSession = ()=>{
       </ul>
       <span class="navbar-text">
         <div class="loginlink" id="loginlogout">
+          <!-- Navbar com username e logout é preenchido aqui -->
         </div>
-        </span>
+      </span>
     </div>
   </div>
 </nav>
