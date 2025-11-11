@@ -14,6 +14,9 @@ urlpatterns = [
     path('logout/', views.logout_request, name='logout_api'),
     path('register/', views.registration, name='register_api'),  # ✅ Rota de registro
     path('get_current_user/', views.get_current_user, name='get_current_user'),
+    path(route='get_cars', view=views.get_cars, name ='getcars'),
+    path('populate/', views.populate_database, name='populate_database'),
+
     # path('register/', TemplateView.as_view(template_name="index.html")),
     
     # Outras rotas (implementar depois)
