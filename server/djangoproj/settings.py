@@ -64,6 +64,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+            os.path.join(BASE_DIR, 'frontend/build'),
             os.path.join(BASE_DIR,'frontend/static')
             ],
         'APP_DIRS': True,
@@ -142,5 +143,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'frontend/static')
+    os.path.join(BASE_DIR,'frontend/build/static'),  # ✅ CORRETO! Aponta pro build do React
+    os.path.join(BASE_DIR,'frontend/static'),  # Outros arquivos
 ]
