@@ -1,0 +1,10 @@
+cat > .jshintrc << 'EOF'
+{
+  "esversion": 8,
+  "node": true,
+  "strict": false,
+  "asi": true,
+  "laxcomma": true,
+  "sub": true
+}
+EOF
