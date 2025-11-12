@@ -19,7 +19,9 @@ urlpatterns = [
     # O React Router (App.js) decide qual componente mostrar
     path('login/', TemplateView.as_view(template_name="index.html"), name='login_page'),
     path('register/', TemplateView.as_view(template_name="index.html"), name='register_page'),  # ✅ MESMO index.html
-    
+    path('dealers/', TemplateView.as_view(template_name="index.html")),
+    path('dealer/<int:dealer_id>',TemplateView.as_view(template_name="index.html")),
+    path('postreview/<int:dealer_id>',TemplateView.as_view(template_name="index.html")),
     # API endpoints
     path('djangoapp/', include('djangoapp.urls')),
     
