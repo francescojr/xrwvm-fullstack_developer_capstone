@@ -1,30 +1,9 @@
-cd /home/project/xrwvm-fullstack_developer_capstone
-cat > .flake8 << 'EOF'
 [flake8]
 max-line-length = 120
 exclude = 
     migrations,
     __pycache__,
     manage.py,
-    settings.py,
     env,
     venv
-ignore = 
-    E501,  # line too long (handled by max-line-length)
-    W293,  # blank line contains whitespace
-    W291,  # trailing whitespace
-    F401,  # imported but unused
-    E302,  # expected 2 blank lines
-    E303,  # too many blank lines
-    E231,  # missing whitespace after ':'
-    E722,  # bare except
-    W391,  # blank line at end of file
-    W292,  # no newline at end of file
-    F821,  # undefined name (for external imports)
-    F811,  # redefinition of unused
-    E117,  # over-indented
-    E225,  # missing whitespace around operator
-    E251,  # unexpected spaces around keyword
-    E275,  # missing whitespace after keyword
-    F541   # f-string missing placeholders
-EOF
+ignore = E501,W293,W291,F401,E302,E303,E231,E722,W391,W292,F821,F811,E117,E225,E251,E275,F541
